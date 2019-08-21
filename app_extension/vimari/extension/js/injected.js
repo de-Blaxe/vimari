@@ -28,6 +28,58 @@ var topWindow = (window.top === window),
 	shiftKeyToggle = false,
 	hudDuration = 5000;
 
+// Credit to https://github.com/flipxfx/sVim for the smooth scrolling
+
+var animationFrame
+
+scrollHelper = function(x, y) {
+    console.log("x value is " + x);
+    console.log("y value is " + y);
+    // If smooth scroll is off then use regular scroll
+    /*
+     if (!sVimTab.settings.smoothscroll) {
+     scrollBy(x, y);
+     return;
+     }
+     */
+    window.cancelAnimationFrame(animationFrame)
+    
+    // Smooth scroll
+    var i = 0;
+    var delta = 0;
+    var scrollDuration = 30;
+    
+    // Ease function
+    function easeOutExpo(t, b, c, d) {
+        return c * (-Math.pow(2, -10 * t / d ) + 1 ) + b;
+    }
+    
+    // Animate the scroll
+    function animLoop() {
+        var toScroll = Math.round(easeOutExpo(i, 0, y, scrollDuration) - delta);
+        
+        if (toScroll != 0) {
+            if (y) {
+                
+                window.scrollBy(0, toScroll);
+            } else {
+                window.scrollBy(toScroll, 0);
+            }
+        }
+        
+        if (i < scrollDuration) {
+            animationFrame = window.requestAnimationFrame(animLoop);
+        }
+        
+        delta = easeOutExpo(i, 0, (x || y), scrollDuration);
+        i += 1;
+    }
+    
+    // Start scroll
+    
+    animLoop();
+}
+
 var actionMap = {
 	'hintToggle' : function() {
 		HUD.showForDuration('Open link in current tab', hudDuration);
@@ -43,17 +95,21 @@ var actionMap = {
 	'tabBack': function() {
 		safari.self.tab.dispatchMessage('changeTab', 0); },
 
-	'scrollDown':
-		function() { window.scrollBy({ top: settings.scrollSize, behavior: 'smooth' }); },
+	'scrollDown': function() {
+        scrollHelper(0, settings.scrollSize);
+                },
 
-	'scrollUp':
-		function() { window.scrollBy({top: -settings.scrollSize, behavior: 'smooth' }); },
+	'scrollUp': function() {
+        scrollHelper(0, -settings.scrollSize)
+                },
 
-	'scrollLeft':
-		function() { window.scrollBy({left: -settings.scrollSize, behavior: 'smooth' }); },
+	'scrollLeft': function() {
+        scrollHelper(-settings.scrollSize, 0)
+                },
 
-	'scrollRight':
-		function() { window.scrollBy({left: settings.scrollSize, behavior: 'smooth' }); },
+    'scrollRight': function() {
+        scrollHelper(settings.scrollSize, 0)
+                },
 
 	'goBack':
 		function() { window.history.back(); },
@@ -73,17 +129,21 @@ var actionMap = {
 	'closeTabReverse':
 		function() { safari.self.tab.dispatchMessage('closeTab', 1); },
 
-	'scrollDownHalfPage':
-		function() { window.scrollBy({top: window.innerHeight / 2, behavior: 'smooth' }); },
+	'scrollDownHalfPage': function() {
+            scrollHelper(0, window.innerHeight / 2)
+                },
 
-	'scrollUpHalfPage':
-		function() { window.scrollBy({top: window.innerHeight / -2, behavior: 'smooth' }); },
+    'scrollUpHalfPage': function() {
+            scrollHelper(0, -window.innerHeight / 2)
+                },
 
-	'goToPageBottom':
-		function() { window.scrollBy({top: document.body.scrollHeight, behavior: 'smooth' }); },
+	'goToPageBottom': function() {
+            scrollHelper(0, document.body.scrollHeight)
+                },
 
-	'goToPageTop':
-		function() { window.scrollBy({top: -document.body.scrollHeight, behavior: 'smooth' }); }
+    'goToPageTop': function() {
+        scrollHelper(0, -document.body.scrollHeight)
+    },
 };
 
 // Meant to be overridden, but still has to be copy/pasted from the original...

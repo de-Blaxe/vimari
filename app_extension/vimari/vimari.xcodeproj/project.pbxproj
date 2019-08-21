@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		44FD741F230CCEE700648D41 /* smoothscroll.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 44FD741E230CCEE700648D41 /* smoothscroll.min.js */; };
 		F43C527020F93B6C0049445F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C526F20F93B6C0049445F /* AppDelegate.swift */; };
 		F43C527220F93B6D0049445F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C527120F93B6D0049445F /* Assets.xcassets */; };
 		F43C527520F93B6D0049445F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43C527320F93B6D0049445F /* MainMenu.xib */; };
@@ -51,7 +50,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		44FD741E230CCEE700648D41 /* smoothscroll.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = smoothscroll.min.js; sourceTree = "<group>"; };
 		F43C526C20F93B6C0049445F /* vimari.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vimari.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C526F20F93B6C0049445F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F43C527120F93B6D0049445F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 		F493A43420FA4ED2000B2F97 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				44FD741E230CCEE700648D41 /* smoothscroll.min.js */,
 				F43C52C320F93EE00049445F /* mousetrap.js */,
 				F43C52C420F93EE00049445F /* vimium-scripts.js */,
 			);
@@ -271,7 +268,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F48E129520F96604007357DF /* settings.js in Resources */,
-				44FD741F230CCEE700648D41 /* smoothscroll.min.js in Resources */,
 				F43C52C520F93EE00049445F /* link-hints.js in Resources */,
 				F43C52C920F93EE00049445F /* keyboard-utils.js in Resources */,
 				F4C4DA3D210A518F009A8D56 /* ToolbarItemIcon.pdf in Resources */,
