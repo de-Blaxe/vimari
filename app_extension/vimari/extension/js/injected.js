@@ -18,6 +18,7 @@
  * shiftKeyToggle   - is shift key currently toggled
  */
 
+
 var topWindow = (window.top === window),
 	settings = {},
 	currentZoomLevel = 100,
@@ -43,16 +44,16 @@ var actionMap = {
 		safari.self.tab.dispatchMessage('changeTab', 0); },
 
 	'scrollDown':
-		function() { window.scrollBy(0, settings.scrollSize); },
+		function() { window.scrollBy({ top: settings.scrollSize, behavior: 'smooth' }); },
 
 	'scrollUp':
-		function() { window.scrollBy(0, -settings.scrollSize); },
+		function() { window.scrollBy({top: -settings.scrollSize, behavior: 'smooth' }); },
 
 	'scrollLeft':
-		function() { window.scrollBy(-settings.scrollSize, 0); },
+		function() { window.scrollBy({left: -settings.scrollSize, behavior: 'smooth' }); },
 
 	'scrollRight':
-		function() { window.scrollBy(settings.scrollSize, 0); },
+		function() { window.scrollBy({left: settings.scrollSize, behavior: 'smooth' }); },
 
 	'goBack':
 		function() { window.history.back(); },
@@ -73,16 +74,16 @@ var actionMap = {
 		function() { safari.self.tab.dispatchMessage('closeTab', 1); },
 
 	'scrollDownHalfPage':
-		function() { window.scrollBy(0, window.innerHeight / 2); },
+		function() { window.scrollBy({top: window.innerHeight / 2, behavior: 'smooth' }); },
 
 	'scrollUpHalfPage':
-		function() { window.scrollBy(0, window.innerHeight / -2); },
+		function() { window.scrollBy({top: window.innerHeight / -2, behavior: 'smooth' }); },
 
 	'goToPageBottom':
-		function() { window.scrollBy(0, document.body.scrollHeight); },
+		function() { window.scrollBy({top: document.body.scrollHeight, behavior: 'smooth' }); },
 
 	'goToPageTop':
-		function() { window.scrollBy(0, -document.body.scrollHeight); }
+		function() { window.scrollBy({top: -document.body.scrollHeight, behavior: 'smooth' }); }
 };
 
 // Meant to be overridden, but still has to be copy/pasted from the original...

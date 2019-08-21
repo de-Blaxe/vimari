@@ -50,6 +50,10 @@
 		<array>
 			<dict>
 				<key>Script</key>
+				<string>smoothscroll.min.js</string>
+			</dict>
+			<dict>
+				<key>Script</key>
 				<string>settings.js</string>
 			</dict>
 			<dict>
