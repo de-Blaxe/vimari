@@ -90,10 +90,10 @@ var actionMap = {
 		activateLinkHintsMode(true, false); },
 
 	'tabForward': function() {
-		safari.self.tab.dispatchMessage('changeTab', 1); },
+        nextTab(); },
 
 	'tabBack': function() {
-		safari.self.tab.dispatchMessage('changeTab', 0); },
+		backTab(); },
 
 	'scrollDown': function() {
         scrollHelper(0, settings.scrollSize);
@@ -124,7 +124,7 @@ var actionMap = {
 		function() { openNewTab(); },
 
 	'closeTab':
-		function() { safari.self.tab.dispatchMessage('closeTab', 0); },
+		function() { closeTab(); },
 
 	'closeTabReverse':
 		function() { safari.self.tab.dispatchMessage('closeTab', 1); },
@@ -323,6 +323,20 @@ function isExcludedUrl(storedExcludedUrls, currentUrl) {
 function openNewTab() {
     console.log("-- Open new empty tab --");
     safari.extension.dispatchMessage("openNewTab");
+}
+
+function nextTab() {
+    console.log("-- Next tab --");
+    safari.extension.dispatchMessage("nextTab");
+}
+
+function backTab() {
+    console.log("-- Back tab --");
+    safari.extension.dispatchMessage("backTab");
+}
+
+function closeTab() {
+    safari.extension.dispatchMessage("closeTab");
 }
 
 // These formations removes the protocol and www so that

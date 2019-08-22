@@ -11,6 +11,9 @@ import SafariServices
 enum ActionType: String {
     case openLinkInTab
     case openNewTab
+    case nextTab
+    case backTab
+    case closeTab
 }
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
@@ -23,6 +26,15 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             break
         case ActionType.openNewTab.rawValue:
             openNewTab()
+            break
+        case ActionType.nextTab.rawValue:
+            changeTab(direction: "forward")
+            break
+        case ActionType.backTab.rawValue:
+            changeTab(direction: "backward")
+            break
+        case ActionType.closeTab.rawValue:
+            closeTab()
             break
         default:
             NSLog("Received message with unsupported type: \(messageName)")
@@ -39,10 +51,42 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
     func openNewTab() {
         // Ideally this URL would be something that represents an empty tab better than localhost
-        let url = URL(string: "http://google.com")!
+        let url = URL(string: "https://online.bonjourr.fr")!
         SFSafariApplication.getActiveWindow(completionHandler: {
             $0?.openTab(with: url, makeActiveIfPossible: true, completionHandler: {_ in
                 // Perform some action here after the page loads
+            })
+        })
+    }
+    
+    func changeTab(direction :String) {
+        let forward : Int
+        if direction == "forward" {
+            forward = 1
+        } else {
+            forward = -1
+        }
+            SFSafariApplication.getActiveWindow { (window) in
+                window?.getActiveTab {
+                    (current_tab) in
+                    window?.getAllTabs {
+                        (tabs) in
+                        for (index, tab) in tabs.enumerated() {
+                            if current_tab == tab {
+                                tabs[(((index + forward) % tabs.count) + tabs.count) % tabs.count].activate(completionHandler: {})
+                            }
+                        }
+                    }
+                }
+        }
+    }
+    
+    func closeTab() {
+        SFSafariApplication.getActiveWindow(completionHandler: {
+            (window) in
+            window?.getActiveTab(completionHandler: {
+                (tab) in
+                tab?.close()
             })
         })
     }
